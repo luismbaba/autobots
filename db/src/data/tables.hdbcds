@@ -1,0 +1,57 @@
+context tables {
+
+    entity Address {
+        Address_ID : Integer;
+        Rua        : String(100);
+        Numero     : String(10);
+        lat        : Double;
+        lon        : Double;
+    };
+
+    entity Shipment {
+        key Shipment_ID          : Integer not null;
+            SO_ID                : Integer;
+            Veiculo_ID           : Integer;
+            Material             : String(10);
+            Chegada_Origem       : UTCDateTime;
+            Chegada_Destino      : UTCDateTime;
+            Inicio_Carga_Origem  : UTCDateTime;
+            Inicio_Carga_Destino : UTCDateTime;
+            Saida_Origem         : UTCDateTime;
+            Saida_Destino        : UTCDateTime;
+            Inicio_Descarga      : UTCDateTime;
+            Termoni_Descarga     : UTCDateTime;
+            Tel_Contato_Origem   : String(10);
+            Tel_Contato_Destino  : String(10);
+            Contato_Origem       : String(50);
+            Contato_Destino      : String(50);
+            Endereco_Origem      : association[1, 0..1] to tables.Address { Address_ID };
+            Endereco_Destino     : association[0..1]    to tables.Address { Address_ID };
+    };
+
+    entity Checklist {
+        key Checklist_ID : Integer;
+            Pergunta     : String(100);
+            Resp_Boolean : Boolean;
+            Shipment_ID  : association[1, 0..1] to tables.Shipment { Shipment_ID };
+            Resp_Texto   : String(100);
+    };
+
+    entity Lot {
+        Veiculo_ID  : Integer;
+        lat         : Double;
+        lon         : Double;
+        velocidade  : Double;
+        humidade    : Double;
+        temperatura : Double;
+        olhoFechado : Boolean;
+    };
+
+    entity Evento_NP {
+        created     : UTCDateTime;
+        Shipment_ID : association[1, 0..1] to tables.Shipment { Shipment_ID };
+        descricao   : String(100);
+        tipo        : String(100);
+    };
+
+};

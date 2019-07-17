@@ -1,0 +1,23 @@
+{
+	"welcomeFile": "/web/index.html",
+	"authenticationMethod": "route",
+	"logout": {
+		"logoutEndpoint": "/do/logout"
+	},
+	"routes": [{
+			"source": "^/web/(.*)$",
+			"target": "$1",
+			"localDir": "webapp"
+		}, {
+			"source": "(.*)(.xsjs)",
+			"destination": "xsjs-backend",
+			"csrfProtection": false,
+			"authenticationType": "xsuaa"
+		}, {
+			"source": "(.*)(.xsodata)",
+			"destination": "xsjs-backend",
+			"authenticationType": "xsuaa"
+		}
+
+	]
+}
