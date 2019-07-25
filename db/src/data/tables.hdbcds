@@ -1,7 +1,7 @@
 context tables {
 
     entity Address {
-        Address_ID : Integer;
+        key Address_ID : Integer;
         Rua        : String(100);
         Numero     : String(10);
         lat        : Double;
