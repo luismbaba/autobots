@@ -1,14 +1,14 @@
 context tables {
     entity Address {
-        key addressId : Integer;
-            street    : String(100);
-            number    : String(10);
-            lat       : Double;
-            lon       : Double;
+        key Address_ID : Integer;
+            Rua        : String(100);
+            Numero     : String(10);
+            lat        : Double;
+            lon        : Double;
     };
 
     entity Shipment {
-        key shipmentId           : Integer not null;
+        key Shipment_ID          : Integer not null;
             SO_ID                : Integer;
             Veiculo_ID           : Integer;
             Material             : String(10);
@@ -28,34 +28,16 @@ context tables {
             Endereco_Destino     : association[0..1]    to tables.Address { Address_ID };
     };
 
-    entity Checklist {
-        key Checklist_ID : Integer;
-            Pergunta     : String(100);
-            Resp_Boolean : Boolean;
-            Shipment_ID  : association[1, 0..1] to tables.Shipment { Shipment_ID };
-            Resp_Texto   : String(100);
-    };
-
-    entity Lot {
-        Veiculo_ID  : Integer;
-        lat         : Double;
-        lon         : Double;
-        velocidade  : Double;
-        humidade    : Double;
-        temperatura : Double;
-        olhoFechado : Boolean;
-    };
-
     entity EventMasterData {
-        event_id     : Integer;
+        id           : Integer;
         description  : String(100);
-        eventType    : String;
+        eventType    : String(100);
         avgEventTime : Double;
     };
 
     entity Events {
         id                  : Integer;
-        event_id            : association[1, 0..1] to tables.EventMasterData { event_id };
+        event_id            : association[1, 0..1] to tables.EventMasterData { id };
         eventStartTimestamp : UTCDateTime;
         eventEndTimestamp   : UTCDateTime;
         Shipment_ID         : association[1, 0..1] to tables.Shipment { Shipment_ID };
