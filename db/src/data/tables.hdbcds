@@ -1,15 +1,14 @@
 context tables {
-
     entity Address {
-        key Address_ID : Integer;
-        Rua        : String(100);
-        Numero     : String(10);
-        lat        : Double;
-        lon        : Double;
+        key addressId : Integer;
+            street    : String(100);
+            number    : String(10);
+            lat       : Double;
+            lon       : Double;
     };
 
     entity Shipment {
-        key Shipment_ID          : Integer not null;
+        key shipmentId           : Integer not null;
             SO_ID                : Integer;
             Veiculo_ID           : Integer;
             Material             : String(10);
@@ -47,11 +46,20 @@ context tables {
         olhoFechado : Boolean;
     };
 
-    entity Evento_NP {
-        created     : UTCDateTime;
-        Shipment_ID : association[1, 0..1] to tables.Shipment { Shipment_ID };
-        descricao   : String(100);
-        tipo        : String(100);
+    entity EventMasterData {
+        event_id     : Integer;
+        description  : String(100);
+        eventType    : String;
+        avgEventTime : Double;
     };
 
+    entity Events {
+        id                  : Integer;
+        event_id            : association[1, 0..1] to tables.EventMasterData { event_id };
+        eventStartTimestamp : UTCDateTime;
+        eventEndTimestamp   : UTCDateTime;
+        Shipment_ID         : association[1, 0..1] to tables.Shipment { Shipment_ID };
+        driver_id           : Integer;
+        vehicle_id          : Integer;
+    };
 };
